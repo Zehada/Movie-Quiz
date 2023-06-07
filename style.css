@@ -2,6 +2,7 @@ body {
   margin: 0;
   background-color: #141414;
   color: white;
+  font-family: "Poppins", sans-serif;
 }
 
 #loader {
@@ -9,7 +10,7 @@ body {
   justify-content: center;
   align-items: center;
   height: 100vh;
-  background-color: black;
+  background-color: #141414;
 }
 
 #titre-loader {
@@ -33,10 +34,30 @@ body {
 }
 #content {
   display: none;
+  min-height: 200vh;
+}
+
+#content::before {
+  content: "";
+  position: absolute;
+  z-index: -1;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: 100%;
+  min-height: 100vh;
+  max-height: 100vh;
+  background-image: url("images/john_wick.jfif");
+  background-position: center;
+  background-size: cover;
 }
 
 #grand-logo {
   width: 122px;
+}
+
+nav {
+  font-size: 0.8rem;
 }
 
 .nav-item {
@@ -126,4 +147,13 @@ body {
   #interrogation {
     width: 100%;
   }
+}
+.boutons-main {
+  font-weight: 500;
+}
+.boutons-main a {
+  border-radius: 4px;
+}
+.boutons-main .info {
+  background: rgba(109, 109, 110, 0.7);
 }/*# sourceMappingURL=style.css.map */
