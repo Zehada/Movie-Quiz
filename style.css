@@ -34,7 +34,6 @@ body {
 }
 #content {
   display: none;
-  min-height: 200vh;
 }
 
 #content::before {
@@ -156,4 +155,41 @@ nav {
 }
 .boutons-main .info {
   background: rgba(109, 109, 110, 0.7);
+}
+
+.myswiper {
+  width: 100%;
+  height: 200px;
+}
+.myswiper .swiper-slide {
+  width: 150px;
+  height: 100%;
+}
+.myswiper img {
+  filter: grayscale(100%);
+  width: 100%;
+  height: 100%;
+  -o-object-fit: cover;
+     object-fit: cover;
+}
+
+#content-quiz {
+  background-image: url(images/avatar.jpeg);
+  background-size: cover;
+  background-position: center;
+}
+
+.input-film {
+  border: 0;
+  border-bottom: white 1px solid;
+  color: white;
+  outline: none;
+}
+
+.bouton-soumettre {
+  background-color: #E50914;
+  color: white;
+  border-radius: 4px;
+  border: 0;
+  font-weight: 500;
 }/*# sourceMappingURL=style.css.map */

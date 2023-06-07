@@ -41,3 +41,15 @@ const defilement = async () => {
 }
 
 defilement()
+
+
+/**********
+ * SWIPER *
+ **********/
+
+var swiper = new Swiper(".myswiper", {
+    slidesPerView: 'auto',
+    spaceBetween: 30,
+    freeMode: true,
+
+});
