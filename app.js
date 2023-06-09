@@ -78,3 +78,44 @@ if (window.location.pathname == '/quiz.html') {
 
     contentQuiz.style.backgroundImage = "url('" + lien + "')";
 }
+
+
+/********
+ * JSON *
+ ********/
+
+// fetch('/data.json')
+//     .then((response) => response.json())
+//     .then((json) => console.log(json));
+
+
+
+// var obj;
+
+// fetch('data.json')
+//     .then(res => res.json())
+//     .then(data => {
+//         obj = data;
+//     })
+//     .then(() => {
+//         console.log(obj.movies.movie[0]);
+//     });
+
+fetch('data.json')
+    .then(jsonData => jsonData.json())
+    .then(data => printIt(data))
+
+let printIt = (data) => {
+    if (window.location.pathname == '/quiz.html') {
+        document.getElementById("soumettre").addEventListener("click", function () {
+            for (i = 0; i < Object.keys(data.movies.movie).length; i++) {
+                if ((document.querySelector("input").value === data.movies.movie[i].title) && (lien === data.movies.movie[i].picture)) {
+                    contentQuiz.innerHTML = "bien joué";
+                }
+            }
+        });
+
+
+    }
+    console.log("url('" + data.movies.movie[0].picture + "')")
+}

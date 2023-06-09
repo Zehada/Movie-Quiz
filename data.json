@@ -1,0 +1,46 @@
+{
+    "movies": {
+        "movie": [
+            {
+                "title": "Avatar",
+                "picture": "images/avatar.jpeg"
+            },
+            {
+                "title": "Le Prestige",
+                "picture": "images/le-prestige.jpg"
+            },
+            {
+                "title": "Movie Title",
+                "picture": "src link"
+            },
+            {
+                "title": "Movie Title",
+                "picture": "src link"
+            },
+            {
+                "title": "Movie Title",
+                "picture": "src link"
+            },
+            {
+                "title": "Movie Title",
+                "picture": "src link"
+            },
+            {
+                "title": "Movie Title",
+                "picture": "src link"
+            },
+            {
+                "title": "Movie Title",
+                "picture": "src link"
+            },
+            {
+                "title": "Movie Title",
+                "picture": "src link"
+            },
+            {
+                "title": "Movie Title",
+                "picture": "src link"
+            }
+        ]
+    }
+}
