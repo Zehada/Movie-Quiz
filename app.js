@@ -126,10 +126,17 @@ let printIt = (data) => {
 
 
     }
-    console.log(data.movies.movie.length)
+    let filmATrouver = document.querySelectorAll(".filmatrouver");
     for (i = 0; i < data.movies.movie.length; i++) {
         if (localStorage.getItem("trouvé" + i)) {
             document.getElementById("filmstrouves").innerHTML += "<div class='swiper-slide trouve'><img src='" + localStorage.getItem("trouvé" + i) + "'></div>";
+            for (div of filmATrouver) {
+                if (div.querySelector("img").attributes['src'].value === data.movies.movie[i].picture) {
+                    div.remove();
+
+                }
+
+            }
         }
 
     }
