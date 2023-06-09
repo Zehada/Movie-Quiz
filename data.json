@@ -3,11 +3,13 @@
         "movie": [
             {
                 "title": "Avatar",
-                "picture": "images/avatar.jpeg"
+                "picture": "images/avatar.jpeg",
+                "found": "images/avatar-ok.jpg"
             },
             {
                 "title": "Le Prestige",
-                "picture": "images/le-prestige.jpg"
+                "picture": "images/le-prestige.jpg",
+                "found": "images/le-prestige-ok.jpg"
             },
             {
                 "title": "Movie Title",

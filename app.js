@@ -3,10 +3,12 @@
  **********/
 
 // code pour afficher et enlever le loader
+const loading = document.getElementById("loader");
+const content = document.getElementById("content");
 
-if (window.location.pathname == '/movie-quiz.html') {
-    const loading = document.getElementById("loader");
-    const content = document.getElementById("content");
+if ((window.location.pathname == '/movie-quiz.html') && (!sessionStorage.viewed)) {
+    sessionStorage.viewed = 1;
+
 
     document.onload = setTimeout(showContent, 3500);
 
@@ -43,6 +45,9 @@ if (window.location.pathname == '/movie-quiz.html') {
     }
 
     defilement()
+} else if (window.location.pathname == '/movie-quiz.html') {
+    loading.style.display = "none";
+    content.style.display = "block";
 }
 
 /**********
@@ -63,7 +68,7 @@ var swiper = new Swiper(".myswiper", {
 
 
 contentQuiz = document.getElementById("content-quiz");
-const buttons = document.querySelectorAll(".swiper-slide img");
+const buttons = document.querySelectorAll(".atrouver img");
 const buttonPressed = e => {
     localStorage.setItem('lien', e.target.attributes['src'].value);
 }
@@ -107,15 +112,27 @@ fetch('data.json')
 
 let printIt = (data) => {
     if (window.location.pathname == '/quiz.html') {
+        sessionStorage.viewed = 1;
         document.getElementById("soumettre").addEventListener("click", function () {
             for (i = 0; i < Object.keys(data.movies.movie).length; i++) {
                 if ((document.querySelector("input").value === data.movies.movie[i].title) && (lien === data.movies.movie[i].picture)) {
-                    contentQuiz.innerHTML = "bien joué";
+                    localStorage.setItem(("trouvé" + i), data.movies.movie[i].found)
+                    document.getElementById("bonne-reponse").style.display = "block";
+                    window.location.replace("movie-quiz.html");
+
                 }
             }
         });
 
 
     }
-    console.log("url('" + data.movies.movie[0].picture + "')")
+    console.log(data.movies.movie.length)
+    for (i = 0; i < data.movies.movie.length; i++) {
+        if (localStorage.getItem("trouvé" + i)) {
+            document.getElementById("filmstrouves").innerHTML += "<div class='swiper-slide trouve'><img src='" + localStorage.getItem("trouvé" + i) + "'></div>";
+        }
+
+    }
 }
+
+
