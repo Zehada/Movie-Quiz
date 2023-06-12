@@ -122,6 +122,17 @@ let printIt = (data) => {
 
                 }
             }
+            for (i = 0; i < Object.keys(data.movies.serie).length; i++) {
+                if ((document.querySelector("input").value === data.movies.serie[i].title) && (lien === data.movies.serie[i].picture)) {
+                    localStorage.setItem(("trouvée" + i), data.movies.serie[i].found)
+                    document.getElementById("bonne-reponse").style.display = "block";
+                    window.location.replace("movie-quiz.html");
+
+                }
+            }
+
+
+
         });
 
 
@@ -140,6 +151,20 @@ let printIt = (data) => {
         }
 
     }
-}
 
+    let serieATrouver = document.querySelectorAll(".serieatrouver");
+    for (i = 0; i < data.movies.serie.length; i++) {
+        if (localStorage.getItem("trouvée" + i)) {
+            document.getElementById("seriestrouvees").innerHTML += "<div class='swiper-slide trouve'><img src='" + localStorage.getItem("trouvée" + i) + "'></div>";
+            for (divs of serieATrouver) {
+                if (divs.querySelector("img").attributes['src'].value === data.movies.serie[i].picture) {
+                    divs.remove();
+
+                }
+
+            }
+        }
+
+    }
+}
 
