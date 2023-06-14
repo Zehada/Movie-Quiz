@@ -201,4 +201,39 @@ nav {
   font-size: 1.8rem;
   background-color: #B6060E;
   text-align: center;
+}
+
+#content-quiz2 {
+  background-size: cover;
+  background-position: center;
+  background-repeat: no-repeat;
+}
+
+#synopsis {
+  font-size: 0.8rem;
+}
+
+#boxfilm {
+  min-height: 100vh;
+}
+
+h4,
+h5 {
+  max-width: 150px;
+}
+
+h4 {
+  font-weight: 900;
+  font-size: 1rem;
+}
+
+h5 {
+  font-size: 0.8rem;
+}
+
+#swiper-acteur {
+  min-height: 300px;
+}
+#swiper-acteur img {
+  height: 200px;
 }/*# sourceMappingURL=style.css.map */
