@@ -67,22 +67,22 @@ var swiper = new Swiper(".myswiper", {
  ********************/
 
 
-contentQuiz = document.getElementById("content-quiz");
-const buttons = document.querySelectorAll(".atrouver img");
-const buttonPressed = e => {
-    localStorage.setItem('lien', e.target.attributes['src'].value);
-}
+// contentQuiz = document.getElementById("content-quiz");
+// const buttons = document.querySelectorAll(".atrouver img");
+// const buttonPressed = e => {
+//     localStorage.setItem('lien', e.target.attributes['src'].value);
+// }
 
-for (let button of buttons) {
-    button.addEventListener("click", buttonPressed);
-}
+// for (let button of buttons) {
+//     button.addEventListener("click", buttonPressed);
+// }
 
 
-let lien = localStorage.getItem('lien');
-if (window.location.pathname == '/quiz.html') {
+// let lien = localStorage.getItem('lien');
+// if (window.location.pathname == '/quiz.html') {
 
-    contentQuiz.style.backgroundImage = "url('" + lien + "')";
-}
+//     contentQuiz.style.backgroundImage = "url('" + lien + "')";
+// }
 
 
 /********
@@ -96,59 +96,185 @@ fetch('data.json')
     .then(data => printIt(data))
 
 let printIt = (data) => {
-    if (window.location.pathname == '/quiz.html') {
-        sessionStorage.viewed = 1;
-        var input = document.getElementById("fname");
-        input.addEventListener("keypress", function (event) {
-            if (event.key === "Enter") {
-                event.preventDefault();
-                document.getElementById("soumettre").click();
-            }
-        });
-        document.getElementById("soumettre").addEventListener("click", function () {
-            for (i = 0; i < Object.keys(data.movies.movie).length; i++) {
-                if ((document.querySelector("input").value.toLowerCase().normalize("NFD").replace(/[\u0300-\u036f]/g, "") === data.movies.movie[i].title.toLowerCase().normalize("NFD").replace(/[\u0300-\u036f]/g, "")) && (lien === data.movies.movie[i].picture)) {
-                    localStorage.setItem(("trouvé" + i), data.movies.movie[i].found)
-                    document.getElementById("bonne-reponse").style.display = "block";
-                    document.getElementById("mauvaise-reponse").style.display = "none";
-                    setTimeout(function () { window.location.replace("movie-quiz.html") }, 3000);
 
-                } else if ((document.querySelector("input").value.toLowerCase().normalize("NFD").replace(/[\u0300-\u036f]/g, "") != data.movies.movie[i].title.toLowerCase().normalize("NFD").replace(/[\u0300-\u036f]/g, "")) && (lien === data.movies.movie[i].picture)) {
-                    document.querySelector("input").value = "";
-                    document.getElementById("mauvaise-reponse").style.display = "block";
+
+    /********
+     * FILM *
+     ********/
+
+    for (film of data.movies.movie) {
+        const options = {
+            method: 'GET',
+            headers: {
+                accept: 'application/json',
+                Authorization: 'Bearer eyJhbGciOiJIUzI1NiJ9.eyJhdWQiOiIwNTJjNzZiNGY4MTI0MGE1ZDliNmVhNDI1YjI1ZTYzZiIsInN1YiI6IjY0ODZmYmM4OTkyNTljMDBhY2NkY2Q1MSIsInNjb3BlcyI6WyJhcGlfcmVhZCJdLCJ2ZXJzaW9uIjoxfQ.yM3TXK2nsVecbZFkVPLjsLuS3loYN_zw1q92CQXVT8M'
+            }
+        };
+
+        fetch('https://api.themoviedb.org/3/movie/' + film.id + '?language=fr-FR', options)
+            .then(response => response.json())
+            .then(dataMovie => printImageFilm(dataMovie))
+            .catch(err => console.error(err));
+
+        let printImageFilm = (dataMovie) => {
+            if (window.location.pathname == '/movie-quiz.html') {
+                document.getElementById("filmatrouver").innerHTML += '<div class="swiper-slide atrouver filmatrouver"><a href="quiz.html" target="_blank"><img class="' + dataMovie.id + '" src="https://image.tmdb.org/t/p/original' + dataMovie.backdrop_path + '" alt=""></a></div>'
+
+                const imageClicked = document.querySelectorAll(".atrouver img");
+                const buttonPressed = e => {
+                    localStorage.setItem('lien film', e.target.attributes['src'].value);
+                    localStorage.setItem('id film', e.target.className);
+
                 }
-            }
-            for (i = 0; i < Object.keys(data.movies.serie).length; i++) {
-                if ((document.querySelector("input").value.toLowerCase().normalize("NFD").replace(/[\u0300-\u036f]/g, "") === data.movies.serie[i].title.toLowerCase().normalize("NFD").replace(/[\u0300-\u036f]/g, "")) && (lien === data.movies.serie[i].picture)) {
-                    localStorage.setItem(("trouvée" + i), data.movies.serie[i].found)
-                    document.getElementById("bonne-reponse").style.display = "block";
-                    document.getElementById("mauvaise-reponse").style.display = "none";
-                    setTimeout(function () { window.location.replace("movie-quiz.html") }, 3000);
 
-                } else if ((document.querySelector("input").value.toLowerCase().normalize("NFD").replace(/[\u0300-\u036f]/g, "") != data.movies.serie[i].title.toLowerCase().normalize("NFD").replace(/[\u0300-\u036f]/g, "")) && (lien === data.movies.serie[i].picture)) {
-                    document.querySelector("input").value = "";
-                    document.getElementById("mauvaise-reponse").style.display = "block";
+                for (let image of imageClicked) {
+                    image.addEventListener("click", buttonPressed);
                 }
-            }
 
 
+                let filmATrouver = document.querySelectorAll(".filmatrouver");
+                for (i = 0; i < data.movies.movie.length; i++) {
+                    if (localStorage.getItem("trouvé" + i)) {
+                        for (div of filmATrouver) {
+                            console.log(div.querySelector("img"))
+                            if (div.querySelector("img").className === data.movies.movie[i].id) {
+                                div.remove();
 
-        });
+                            }
 
-
-    }
-    if (window.location.pathname == '/movie-quiz.html') {
-        let filmATrouver = document.querySelectorAll(".filmatrouver");
-        for (i = 0; i < data.movies.movie.length; i++) {
-            if (localStorage.getItem("trouvé" + i)) {
-                document.getElementById("filmstrouves").innerHTML += "<div class='swiper-slide trouve'><a href='quiz2.html' target='_blank'><img class='" + data.movies.movie[i].id + "' src='" + localStorage.getItem("trouvé" + i) + "'></a></div>";
-                for (div of filmATrouver) {
-                    if (div.querySelector("img").attributes['src'].value === data.movies.movie[i].picture) {
-                        div.remove();
-
+                        }
                     }
 
                 }
+
+
+
+            }
+
+
+            contentQuiz = document.getElementById("content-quiz");
+            let lienFilm = localStorage.getItem('lien film');
+            let idFilm = localStorage.getItem('id film');
+            if (window.location.pathname == '/quiz.html') {
+                contentQuiz.style.backgroundImage = "url('" + lienFilm + "')";
+                sessionStorage.viewed = 1;
+                var input = document.getElementById("fname");
+                input.addEventListener("keypress", function (event) {
+                    if (event.key === "Enter") {
+                        event.preventDefault();
+                        document.getElementById("soumettre").click();
+                    }
+                });
+
+                document.getElementById("soumettre").addEventListener("click", function () {
+                    for (i = 0; i < Object.keys(data.movies.movie).length; i++) {
+                        if ((document.querySelector("input").value.toLowerCase().normalize("NFD").replace(/[\u0300-\u036f]/g, "") === data.movies.movie[i].title.toLowerCase().normalize("NFD").replace(/[\u0300-\u036f]/g, "")) && (idFilm === data.movies.movie[i].id)) {
+                            document.getElementById("bonne-reponse").style.display = "block";
+                            document.getElementById("mauvaise-reponse").style.display = "none";
+                            setTimeout(function () { window.location.replace("movie-quiz.html") }, 3000);
+
+                            if (lienFilm === "https://image.tmdb.org/t/p/original" + dataMovie.backdrop_path) {
+                                localStorage.setItem(("trouvé" + i), ("https://image.tmdb.org/t/p/original" + dataMovie.poster_path));
+                            }
+                        } else if ((document.querySelector("input").value.toLowerCase().normalize("NFD").replace(/[\u0300-\u036f]/g, "") != data.movies.movie[i].title.toLowerCase().normalize("NFD").replace(/[\u0300-\u036f]/g, "")) && (idFilm === data.movies.movie[i].id)) {
+                            document.querySelector("input").value = "";
+                            document.getElementById("mauvaise-reponse").style.display = "block";
+                        }
+                    }
+                    for (i = 0; i < Object.keys(data.movies.serie).length; i++) {
+                        if ((document.querySelector("input").value.toLowerCase().normalize("NFD").replace(/[\u0300-\u036f]/g, "") === data.movies.serie[i].title.toLowerCase().normalize("NFD").replace(/[\u0300-\u036f]/g, "")) && (idFilm === data.movies.serie[i].id)) {
+                            localStorage.setItem(("trouvée" + i), data.movies.serie[i].found)
+                            document.getElementById("bonne-reponse").style.display = "block";
+                            document.getElementById("mauvaise-reponse").style.display = "none";
+                            setTimeout(function () { window.location.replace("movie-quiz.html") }, 3000);
+
+                        } else if ((document.querySelector("input").value.toLowerCase().normalize("NFD").replace(/[\u0300-\u036f]/g, "") != data.movies.serie[i].title.toLowerCase().normalize("NFD").replace(/[\u0300-\u036f]/g, "")) && (idFilm === data.movies.serie[i].id)) {
+                            document.querySelector("input").value = "";
+                            document.getElementById("mauvaise-reponse").style.display = "block";
+                        }
+                    }
+
+
+
+                });
+
+
+            }
+        }
+    }
+
+
+    // code pour afficher le background du formulaire
+    // contentQuiz = document.getElementById("content-quiz");
+    // let lienFilm = localStorage.getItem('lien film');
+
+    // if (window.location.pathname == '/quiz.html') {
+    //     contentQuiz.style.backgroundImage = "url('" + lienFilm + "')";
+    // }
+
+
+    /**********
+     * SÉRIES *
+     **********/
+
+
+
+
+    // if (window.location.pathname == '/quiz.html') {
+    //     sessionStorage.viewed = 1;
+    //     var input = document.getElementById("fname");
+    //     input.addEventListener("keypress", function (event) {
+    //         if (event.key === "Enter") {
+    //             event.preventDefault();
+    //             document.getElementById("soumettre").click();
+    //         }
+    //     });
+    //     document.getElementById("soumettre").addEventListener("click", function () {
+    //         for (i = 0; i < Object.keys(data.movies.movie).length; i++) {
+    //             if ((document.querySelector("input").value.toLowerCase().normalize("NFD").replace(/[\u0300-\u036f]/g, "") === data.movies.movie[i].title.toLowerCase().normalize("NFD").replace(/[\u0300-\u036f]/g, "")) && (lien === data.movies.movie[i].picture)) {
+    //                 localStorage.setItem(("trouvé" + i), data.movies.movie[i].found)
+    //                 document.getElementById("bonne-reponse").style.display = "block";
+    //                 document.getElementById("mauvaise-reponse").style.display = "none";
+    //                 setTimeout(function () { window.location.replace("movie-quiz.html") }, 3000);
+
+    //             } else if ((document.querySelector("input").value.toLowerCase().normalize("NFD").replace(/[\u0300-\u036f]/g, "") != data.movies.movie[i].title.toLowerCase().normalize("NFD").replace(/[\u0300-\u036f]/g, "")) && (lien === data.movies.movie[i].picture)) {
+    //                 document.querySelector("input").value = "";
+    //                 document.getElementById("mauvaise-reponse").style.display = "block";
+    //             }
+    //         }
+    //         for (i = 0; i < Object.keys(data.movies.serie).length; i++) {
+    //             if ((document.querySelector("input").value.toLowerCase().normalize("NFD").replace(/[\u0300-\u036f]/g, "") === data.movies.serie[i].title.toLowerCase().normalize("NFD").replace(/[\u0300-\u036f]/g, "")) && (lien === data.movies.serie[i].picture)) {
+    //                 localStorage.setItem(("trouvée" + i), data.movies.serie[i].found)
+    //                 document.getElementById("bonne-reponse").style.display = "block";
+    //                 document.getElementById("mauvaise-reponse").style.display = "none";
+    //                 setTimeout(function () { window.location.replace("movie-quiz.html") }, 3000);
+
+    //             } else if ((document.querySelector("input").value.toLowerCase().normalize("NFD").replace(/[\u0300-\u036f]/g, "") != data.movies.serie[i].title.toLowerCase().normalize("NFD").replace(/[\u0300-\u036f]/g, "")) && (lien === data.movies.serie[i].picture)) {
+    //                 document.querySelector("input").value = "";
+    //                 document.getElementById("mauvaise-reponse").style.display = "block";
+    //             }
+    //         }
+
+
+
+    //     });
+
+
+    // }
+
+
+
+    if (window.location.pathname == '/movie-quiz.html') {
+        for (i = 0; i < data.movies.movie.length; i++) {
+            if (localStorage.getItem("trouvé" + i)) {
+                document.getElementById("filmstrouves").innerHTML += "<div class='swiper-slide trouve'><a href='quiz2.html' target='_blank'><img class='" + data.movies.movie[i].id + "' src='" + localStorage.getItem("trouvé" + i) + "'></a></div>";
+                // for (div of filmATrouver) {
+                //     if (div.querySelector("img").className === data.movies.movie[i].id) {
+                //         div.remove();
+
+                //     }
+
+                // }
             }
 
         }
@@ -170,6 +296,7 @@ let printIt = (data) => {
     }
 
 
+
     const contentQuizDeux = document.getElementById("content-quiz2");
     const imageTrouvee = document.querySelectorAll(".trouve img");
 
@@ -180,7 +307,6 @@ let printIt = (data) => {
 
     for (let image of imageTrouvee) {
         image.addEventListener("click", ImagePressed);
-        console.log(image)
     }
 
 
@@ -204,16 +330,7 @@ let printIt = (data) => {
         let printu = (data) => {
             document.getElementById("movietitle").innerHTML = data.title;
             document.getElementById("synopsis").innerHTML = data.overview;
-        }
-
-        fetch('https://api.themoviedb.org/3/movie/' + localStorage.getItem("idtrouve") + '/images', options)
-            .then(response => response.json())
-            .then(data => printimage(data))
-
-            .catch(err => console.error(err));
-
-        let printimage = (data) => {
-            contentQuizDeux.style.backgroundImage = "url('https://image.tmdb.org/t/p/original" + data.backdrops[0].file_path + "')";
+            contentQuizDeux.style.backgroundImage = "url('https://image.tmdb.org/t/p/original" + data.backdrop_path + "')";
         }
 
 
@@ -225,7 +342,7 @@ let printIt = (data) => {
 
         let printActor = (data) => {
             for (actor of data.cast)
-                if (actor.profile_path) {
+                if ((actor.profile_path) && (data.cast.indexOf(actor) < 10)) {
                     document.querySelector(".acteurs").innerHTML += "<div class='swiper-slide'><img src='https://image.tmdb.org/t/p/original" + actor.profile_path + "' alt='" + actor.name + "'><h4 class='mt-4'>" + actor.name + "</h4><h5>" + actor.character + "</h5></div>"
                 }
 
@@ -236,8 +353,6 @@ let printIt = (data) => {
 
 
 }
-
-
 
 
 
