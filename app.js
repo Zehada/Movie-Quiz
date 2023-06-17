@@ -288,7 +288,7 @@ let printIt = (data) => {
     let idFilm = localStorage.getItem('id film');
 
     if (window.location.pathname == '/quiz.html') {
-        contentQuiz.style.backgroundImage = "url('" + lienFilm + "')";
+        contentQuiz.style.backgroundImage = "linear-gradient(0deg, rgba(20, 20, 20, 1) 0%, rgba(20, 20, 20, 1) 1%, rgba(0, 0, 0, 0) 100%), url('" + lienFilm + "')";
         sessionStorage.viewed = 1;
         var input = document.getElementById("fname");
         input.addEventListener("keypress", function (event) {
@@ -446,7 +446,7 @@ let printIt = (data) => {
             let printu = (data) => {
                 document.getElementById("movietitle").innerHTML = data.title;
                 document.getElementById("synopsis").innerHTML = data.overview;
-                contentQuizDeux.style.backgroundImage = "url('https://image.tmdb.org/t/p/original" + data.backdrop_path + "')";
+                contentQuizDeux.style.backgroundImage = "linear-gradient(0deg, rgba(20, 20, 20, 1) 0%, rgba(20, 20, 20, 1) 1%, rgba(0, 0, 0, 0) 100%), url('https://image.tmdb.org/t/p/original" + data.backdrop_path + "')";
             }
 
 
@@ -503,7 +503,7 @@ let printIt = (data) => {
             let printSeries = (data) => {
                 document.getElementById("movietitle").innerHTML = data.name;
                 document.getElementById("synopsis").innerHTML = data.overview;
-                contentQuizDeux.style.backgroundImage = "url('https://image.tmdb.org/t/p/original" + data.backdrop_path + "')";
+                contentQuizDeux.style.backgroundImage = "linear-gradient(0deg, rgba(20, 20, 20, 1) 0%, rgba(20, 20, 20, 1) 1%, rgba(0, 0, 0, 0) 100%), url('https://image.tmdb.org/t/p/original" + data.backdrop_path + "')";
             }
 
 
