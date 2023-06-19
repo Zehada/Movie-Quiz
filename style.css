@@ -37,7 +37,7 @@ body {
 }
 
 #main-content {
-  background-image: url("images/john_wick.jfif");
+  background-image: linear-gradient(0deg, rgb(20, 20, 20) 0%, rgb(20, 20, 20) 1%, rgba(0, 0, 0, 0) 100%), url("images/john-wick.jpg");
   background-position: center;
   background-size: cover;
   min-height: 100vh;
@@ -57,6 +57,14 @@ nav {
   position: relative;
   padding: 0 !important;
   margin: 0.5rem;
+}
+
+.nav-item:focus {
+  color: white;
+}
+
+.nav-item:active {
+  color: white;
 }
 
 .nav-item:hover {
@@ -142,6 +150,7 @@ nav {
 }
 .boutons-main {
   font-weight: 500;
+  font-size: 1.3rem;
 }
 .boutons-main a {
   border-radius: 4px;
@@ -150,9 +159,17 @@ nav {
   background: rgba(109, 109, 110, 0.7);
 }
 
+@media screen and (max-width: 576px) {
+  .boutons-main {
+    font-size: 0.8rem;
+  }
+  .logo-main {
+    max-width: 20px;
+  }
+}
 .myswiper {
   width: 100%;
-  height: 200px;
+  height: 225px;
 }
 .myswiper .swiper-slide {
   width: 150px;
@@ -226,8 +243,8 @@ h5 {
 }
 
 #swiper-acteur {
-  min-height: 300px;
+  min-height: 310px;
 }
 #swiper-acteur img {
-  height: 200px;
+  height: 225px;
 }/*# sourceMappingURL=style.css.map */

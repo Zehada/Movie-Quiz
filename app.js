@@ -50,6 +50,20 @@ if ((window.location.pathname == '/movie-quiz.html') && (!sessionStorage.viewed)
     content.style.display = "block";
 }
 
+
+/**********
+ * NAVBAR *
+ **********/
+
+const navItems = document.querySelectorAll(".nav-item");
+const toggler = document.querySelector(".navbar-toggler");
+for (item of navItems) {
+    item.addEventListener("click", function () {
+        toggler.click();
+    });
+}
+
+
 /**********
  * SWIPER *
  **********/
@@ -500,6 +514,7 @@ let printIt = (data) => {
 
     const contentQuizDeux = document.getElementById("content-quiz2");
     if (window.location.pathname == '/quiz2.html') {
+        sessionStorage.viewed = 1;
 
         /*********
          * FILMS *
@@ -625,5 +640,6 @@ let printIt = (data) => {
 
 
 }
+
 
 
