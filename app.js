@@ -269,6 +269,78 @@ let printIt = (data) => {
 
 
 
+
+        /********
+         * MAIN *
+         ********/
+
+
+        /*********
+        * FILMS *
+        *********/
+
+        if (localStorage.getItem("type dernier trouvé") === "film") {
+            const options = {
+                method: 'GET',
+                headers: {
+                    accept: 'application/json',
+                    Authorization: 'Bearer eyJhbGciOiJIUzI1NiJ9.eyJhdWQiOiIwNTJjNzZiNGY4MTI0MGE1ZDliNmVhNDI1YjI1ZTYzZiIsInN1YiI6IjY0ODZmYmM4OTkyNTljMDBhY2NkY2Q1MSIsInNjb3BlcyI6WyJhcGlfcmVhZCJdLCJ2ZXJzaW9uIjoxfQ.yM3TXK2nsVecbZFkVPLjsLuS3loYN_zw1q92CQXVT8M'
+                }
+            };
+
+            fetch('https://api.themoviedb.org/3/movie/' + localStorage.getItem("dernier trouvé") + '?append_to_response=videos&language=fr-FR', options)
+                .then(response => response.json())
+                .then(dataMovie => printImageFilm(dataMovie))
+                .catch(err => console.error(err));
+
+            let printImageFilm = (dataMovie) => {
+                document.getElementById("main-content").style.backgroundImage = "linear-gradient(0deg, rgba(20, 20, 20, 1) 0%, rgba(20, 20, 20, 1) 1%, rgba(0, 0, 0, 0) 100%), url('https://image.tmdb.org/t/p/original" + dataMovie.backdrop_path + "')";
+                document.querySelector("h2").innerHTML = dataMovie.title;
+                for (i = 0; i < dataMovie.videos.results.length; i++) {
+                    if (dataMovie.videos.results[i].type === "Trailer") {
+                        document.querySelector(".annonce").href = "https://www.youtube.com/watch?v=" + dataMovie.videos.results[i].key;
+                    }
+                }
+                document.querySelector(".info").href = "https://www.themoviedb.org/movie/" + dataMovie.id;
+
+            }
+
+        }
+
+
+        /**********
+        * SÉRIES *
+        **********/
+
+
+        if (localStorage.getItem("type dernier trouvé") === "série") {
+            const options = {
+                method: 'GET',
+                headers: {
+                    accept: 'application/json',
+                    Authorization: 'Bearer eyJhbGciOiJIUzI1NiJ9.eyJhdWQiOiIwNTJjNzZiNGY4MTI0MGE1ZDliNmVhNDI1YjI1ZTYzZiIsInN1YiI6IjY0ODZmYmM4OTkyNTljMDBhY2NkY2Q1MSIsInNjb3BlcyI6WyJhcGlfcmVhZCJdLCJ2ZXJzaW9uIjoxfQ.yM3TXK2nsVecbZFkVPLjsLuS3loYN_zw1q92CQXVT8M'
+                }
+            };
+
+            fetch('https://api.themoviedb.org/3/tv/' + localStorage.getItem("dernier trouvé") + '?append_to_response=videos&language=fr-FR', options)
+                .then(response => response.json())
+                .then(dataMovie => printImageFilm(dataMovie))
+                .catch(err => console.error(err));
+
+            let printImageFilm = (dataMovie) => {
+                document.getElementById("main-content").style.backgroundImage = "linear-gradient(0deg, rgba(20, 20, 20, 1) 0%, rgba(20, 20, 20, 1) 1%, rgba(0, 0, 0, 0) 100%), url('https://image.tmdb.org/t/p/original" + dataMovie.backdrop_path + "')";
+                document.querySelector("h2").innerHTML = dataMovie.name;
+                for (i = 0; i < dataMovie.videos.results.length; i++) {
+                    if (dataMovie.videos.results[i].type === "Trailer") {
+                        document.querySelector(".annonce").href = "https://www.youtube.com/watch?v=" + dataMovie.videos.results[i].key;
+                    }
+                }
+                document.querySelector(".info").href = "https://www.themoviedb.org/tv/" + dataMovie.id;
+
+            }
+
+        }
+
     }
 
 
@@ -327,6 +399,8 @@ let printIt = (data) => {
                         document.getElementById("mauvaise-reponse").style.display = "none";
                         setTimeout(function () { window.location.replace("movie-quiz.html") }, 3000);
                         localStorage.setItem(("trouvé " + dataMovie.title), ("https://image.tmdb.org/t/p/original" + dataMovie.poster_path));
+                        localStorage.setItem("dernier trouvé", dataMovie.id);
+                        localStorage.setItem("type dernier trouvé", "film");
 
                     } else if ((document.querySelector("input").value.toLowerCase().normalize("NFD").replace(/[\u0300-\u036f]/g, "") != dataMovie.title.toLowerCase().normalize("NFD").replace(/[\u0300-\u036f]/g, "")) && (lienFilm === "https://image.tmdb.org/t/p/original" + dataMovie.backdrop_path)) {
                         document.querySelector("input").value = "";
@@ -377,6 +451,8 @@ let printIt = (data) => {
                         document.getElementById("mauvaise-reponse").style.display = "none";
                         setTimeout(function () { window.location.replace("movie-quiz.html") }, 3000);
                         localStorage.setItem(("trouvé " + dataMovie.name), ("https://image.tmdb.org/t/p/original" + dataMovie.poster_path));
+                        localStorage.setItem("dernier trouvé", dataMovie.id);
+                        localStorage.setItem("type dernier trouvé", "série");
 
                     } else if ((document.querySelector("input").value.toLowerCase().normalize("NFD").replace(/[\u0300-\u036f]/g, "") != dataMovie.name.toLowerCase().normalize("NFD").replace(/[\u0300-\u036f]/g, "")) && (lienFilm === "https://image.tmdb.org/t/p/original" + dataMovie.backdrop_path)) {
                         document.querySelector("input").value = "";
@@ -458,7 +534,7 @@ let printIt = (data) => {
 
             let printActor = (data) => {
                 for (actor of data.cast) {
-                    if ((actor.profile_path) && (data.cast.indexOf(actor) < 10) && (actor.known_for_department === "Acting")) {
+                    if ((actor.profile_path) && (data.cast.indexOf(actor) < 10)) {
                         // document.querySelector(".acteurs").innerHTML += "<div class='swiper-slide'><img src='https://image.tmdb.org/t/p/original" + actor.profile_path + "' alt='" + actor.name + "'><h4 class='mt-4'>" + actor.name + "</h4><h5>" + actor.character + "</h5></div>"
                         const acteurs = document.querySelector(".acteurs");
                         const divSwiper = document.createElement("div");
@@ -516,7 +592,7 @@ let printIt = (data) => {
             let printSeriesActors = (data) => {
                 for (actor of data.cast) {
                     console.log(actor)
-                    if ((actor.profile_path) && (data.cast.indexOf(actor) < 10 && (actor.known_for_department === "Acting"))) {
+                    if ((actor.profile_path) && (data.cast.indexOf(actor) < 10)) {
                         // document.querySelector(".acteurs").innerHTML += "<div class='swiper-slide'><img src='https://image.tmdb.org/t/p/original" + actor.profile_path + "' alt='" + actor.name + "'><h4 class='mt-4'>" + actor.name + "</h4><h5>" + actor.character + "</h5></div>"
                         const acteurs = document.querySelector(".acteurs");
                         const divSwiper = document.createElement("div");
@@ -549,3 +625,5 @@ let printIt = (data) => {
 
 
 }
+
+
