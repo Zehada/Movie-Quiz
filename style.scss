@@ -273,3 +273,14 @@ h5 {
         height: 225px;
     }
 }
+
+
+.custom-popover {
+    --bs-popover-bg: #141414b9;
+    --bs-popover-body-color: white;
+}
+
+.popover-body {
+    font-family: 'Poppins', sans-serif;
+    font-size: 0.8rem;
+}
