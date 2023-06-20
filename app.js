@@ -6,11 +6,11 @@
 const loading = document.getElementById("loader");
 const content = document.getElementById("content");
 
-if ((window.location.pathname == '/movie-quiz.html') && (!sessionStorage.viewed)) {
+if ((window.location.pathname.endsWith('/movie-quiz.html')) && (!sessionStorage.viewed)) {
     sessionStorage.viewed = 1;
 
 
-    document.onload = setTimeout(showContent, 3500);
+    document.onload = setTimeout(showContent, 4000);
 
     function showContent() {
         loading.style.display = "none";
@@ -45,7 +45,7 @@ if ((window.location.pathname == '/movie-quiz.html') && (!sessionStorage.viewed)
     }
 
     defilement()
-} else if (window.location.pathname == '/movie-quiz.html') {
+} else if (window.location.pathname.endsWith('/movie-quiz.html')) {
     loading.style.display = "none";
     content.style.display = "block";
 }
@@ -90,10 +90,12 @@ var swiper = new Swiper(".myswiper", {
 
 
 
-
 /********
  * JSON *
  ********/
+
+
+
 
 fetch('data.json')
     .then(jsonData => jsonData.json())
@@ -105,7 +107,7 @@ let printIt = (data) => {
      * PAGE MOVIE QUIZ *
      *******************/
 
-    if (window.location.pathname === '/movie-quiz.html') {
+    if (window.location.pathname.endsWith('/movie-quiz.html')) {
 
 
         /********
@@ -386,7 +388,7 @@ let printIt = (data) => {
     let lienFilm = localStorage.getItem('lien film');
     let idFilm = localStorage.getItem('id film');
 
-    if (window.location.pathname == '/quiz.html') {
+    if (window.location.pathname.endsWith('/quiz.html')) {
         contentQuiz.style.backgroundImage = "linear-gradient(0deg, rgba(20, 20, 20, 1) 0%, rgba(20, 20, 20, 1) 1%, rgba(0, 0, 0, 0) 100%), url('" + lienFilm + "')";
         sessionStorage.viewed = 1;
         var input = document.getElementById("fname");
@@ -436,20 +438,6 @@ let printIt = (data) => {
                 }
             }
 
-            // for (i = 0; i < Object.keys(data.movies.serie).length; i++) {
-            //     if ((document.querySelector("input").value.toLowerCase().normalize("NFD").replace(/[\u0300-\u036f]/g, "") === data.movies.serie[i].title.toLowerCase().normalize("NFD").replace(/[\u0300-\u036f]/g, "")) && (idFilm === data.movies.serie[i].id)) {
-            //         localStorage.setItem(("trouvée" + i), data.movies.serie[i].found)
-            //         document.getElementById("bonne-reponse").style.display = "block";
-            //         document.getElementById("mauvaise-reponse").style.display = "none";
-            //         setTimeout(function () { window.location.replace("movie-quiz.html") }, 3000);
-
-            //     } else if ((document.querySelector("input").value.toLowerCase().normalize("NFD").replace(/[\u0300-\u036f]/g, "") != data.movies.serie[i].title.toLowerCase().normalize("NFD").replace(/[\u0300-\u036f]/g, "")) && (idFilm === data.movies.serie[i].id)) {
-            //         document.querySelector("input").value = "";
-            //         document.getElementById("mauvaise-reponse").style.display = "block";
-            //     }
-            // }
-
-
 
             /**********
             * SERIES *
@@ -494,30 +482,6 @@ let printIt = (data) => {
 
 
 
-
-
-
-
-    // if (window.location.pathname == '/movie-quiz.html') {
-
-    //     let serieATrouver = document.querySelectorAll(".serieatrouver");
-    //     for (i = 0; i < data.movies.serie.length; i++) {
-    //         if (localStorage.getItem("trouvée" + i)) {
-    //             document.getElementById("seriestrouvees").innerHTML += "<div class='swiper-slide trouve'><a href='quiz2.html' target='_blank'><img class='" + data.movies.serie[i].id + "' src='" + localStorage.getItem("trouvée" + i) + "'></a></div>";
-    //             for (divs of serieATrouver) {
-    //                 if (divs.querySelector("img").attributes['src'].value === data.movies.serie[i].picture) {
-    //                     divs.remove();
-
-    //                 }
-
-    //             }
-    //         }
-
-    //     }
-    // }
-
-
-
     /*********************
     * PAGE INFORMATIONS *
     *********************/
@@ -526,7 +490,7 @@ let printIt = (data) => {
 
 
     const contentQuizDeux = document.getElementById("content-quiz2");
-    if (window.location.pathname == '/quiz2.html') {
+    if (window.location.pathname.endsWith('/quiz2.html')) {
         sessionStorage.viewed = 1;
 
         /*********
