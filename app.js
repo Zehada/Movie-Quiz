@@ -6,11 +6,17 @@
 const loading = document.getElementById("loader");
 const content = document.getElementById("content");
 
+
 if ((window.location.pathname.endsWith('/movie-quiz.html')) && (!sessionStorage.viewed)) {
+    const spansLoader = loading.querySelectorAll("span");
     sessionStorage.viewed = 1;
 
 
-    document.onload = setTimeout(showContent, 4000);
+    for (span of spansLoader) {
+        span.innerHTML = "?";
+    }
+
+    document.onload = setTimeout(showContent, 3500);
 
     function showContent() {
         loading.style.display = "none";
@@ -87,6 +93,19 @@ var swiper = new Swiper(".myswiper", {
     freeMode: true,
 
 });
+
+
+
+/********
+ * MAIN *
+ ********/
+
+if (window.location.pathname.endsWith('/movie-quiz.html')) {
+    if (localStorage.getItem("dernier trouvé") === null) {
+        document.getElementById("main-content").style.backgroundImage = "linear-gradient(0deg, rgba(20, 20, 20, 1) 0%, rgba(20, 20, 20, 1) 1%, rgba(0, 0, 0, 0) 100%), url('images/john-wick.jpg')";
+        document.querySelector("h2").innerHTML = "John Wick : <br>Chapitre 4";
+    }
+}
 
 
 
