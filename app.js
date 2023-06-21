@@ -8,9 +8,10 @@ const content = document.getElementById("content");
 
 
 if ((window.location.pathname.endsWith('/movie-quiz.html')) && (!sessionStorage.viewed)) {
-    const spansLoader = loading.querySelectorAll("span");
+
     sessionStorage.viewed = 1;
 
+    const spansLoader = loading.querySelectorAll("span");
 
     for (span of spansLoader) {
         span.innerHTML = "?";
@@ -105,6 +106,7 @@ if (window.location.pathname.endsWith('/movie-quiz.html')) {
         document.getElementById("main-content").style.backgroundImage = "linear-gradient(0deg, rgba(20, 20, 20, 1) 0%, rgba(20, 20, 20, 1) 1%, rgba(0, 0, 0, 0) 100%), url('images/john-wick.jpg')";
         document.querySelector("h2").innerHTML = "John Wick : <br>Chapitre 4";
     }
+
 }
 
 
@@ -156,7 +158,7 @@ let printIt = (data) => {
                 filmsATrouver.appendChild(divSwiper);
                 const a = document.createElement("a");
                 a.href = "quiz.html";
-                a.target = "_blank";
+                // a.target = "_blank";
                 divSwiper.appendChild(a);
                 const img = document.createElement("img");
                 img.classList.add(dataMovie.id);
@@ -176,7 +178,7 @@ let printIt = (data) => {
                     filmsTrouves.appendChild(divSwiper);
                     const a = document.createElement("a");
                     a.href = "quiz2.html";
-                    a.target = "_blank";
+                    // a.target = "_blank";
                     divSwiper.appendChild(a);
                     const img = document.createElement("img");
                     img.classList.add(dataMovie.id);
@@ -250,7 +252,7 @@ let printIt = (data) => {
                 filmsATrouver.appendChild(divSwiper);
                 const a = document.createElement("a");
                 a.href = "quiz.html";
-                a.target = "_blank";
+                // a.target = "_blank";
                 divSwiper.appendChild(a);
                 const img = document.createElement("img");
                 img.classList.add(dataMovie.id);
@@ -271,7 +273,7 @@ let printIt = (data) => {
                     filmsTrouves.appendChild(divSwiper);
                     const a = document.createElement("a");
                     a.href = "quiz2.html";
-                    a.target = "_blank";
+                    // a.target = "_blank";
                     divSwiper.appendChild(a);
                     const img = document.createElement("img");
                     img.classList.add(dataMovie.id);
@@ -602,7 +604,6 @@ let printIt = (data) => {
 
             let printSeriesActors = (data) => {
                 for (actor of data.cast) {
-                    console.log(actor)
                     if ((actor.profile_path) && (data.cast.indexOf(actor) < 10)) {
                         // document.querySelector(".acteurs").innerHTML += "<div class='swiper-slide'><img src='https://image.tmdb.org/t/p/original" + actor.profile_path + "' alt='" + actor.name + "'><h4 class='mt-4'>" + actor.name + "</h4><h5>" + actor.character + "</h5></div>"
                         const acteurs = document.querySelector(".acteurs");
