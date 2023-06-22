@@ -200,7 +200,8 @@ nav {
         object-fit: cover;
     }
 
-    .atrouver img {
+    .atrouver img,
+    .atrouver-film {
         filter: grayscale(100%);
     }
 }

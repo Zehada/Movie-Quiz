@@ -180,7 +180,8 @@ nav {
   -o-object-fit: cover;
      object-fit: cover;
 }
-.myswiper .atrouver img {
+.myswiper .atrouver img,
+.myswiper .atrouver-film {
   filter: grayscale(100%);
 }
 
